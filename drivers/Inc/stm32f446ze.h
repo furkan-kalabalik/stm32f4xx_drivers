@@ -232,13 +232,15 @@ typedef struct {
 		( RCC->AHB1RSTR &= ~(1 << 7) ); \
 }while(0)
 
+typedef enum {
+	DISABLE,
+	ENABLE
+} EnableStatus_t;
 
-#define ENABLE 			1
-#define DISABLE 		0
-#define SET				ENABLE
-#define RESET			DISABLE
-#define GPIO_PIN_SET	SET
-#define GPIO_PIN_RESET	RESET
+typedef enum {
+	RESET,
+	SET
+} SetStatus_t;
 
 
 #include "stm32f446ze_gpio.h"
