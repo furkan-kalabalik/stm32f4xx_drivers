@@ -90,7 +90,8 @@ void GPIO_WriteToOutputPort(GPIO_Handle_t *pGPIOHandle, GPIOPinStatus_t value);
 
 void GPIO_ToggleOutputPin(GPIO_Handle_t *pGPIOHandle, GPIO_PinNumber_t pinNumber);
 
-void GPIO_IRQConfig(uint8_t IRQNumber, uint8_t IRQPriority, EnableStatus_t enableStatus);
+void GPIO_IRQITConfig(IRQNumber_t IRQNumber, EnableStatus_t enableStatus);
+void GPIO_IRQPriorityConfig(IRQNumber_t IRQNumber, uint32_t priority);
 void GPIO_IRQHandling(GPIO_PinNumber_t pinNumber);
 
 #endif /* INC_STM32F446ZE_GPIO_H_ */
