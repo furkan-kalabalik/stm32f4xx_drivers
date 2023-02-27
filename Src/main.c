@@ -22,7 +22,7 @@ int main() {
 
 	gpioUserButton.pGPIOx = GPIOC;
 	gpioUserButton.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_13;
-	gpioUserButton.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_IN;
+	gpioUserButton.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_IT_FT;
 	gpioUserButton.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
 	gpioUserButton.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
 
@@ -30,18 +30,27 @@ int main() {
 	GPIO_PeriClockControl(GPIOC, ENABLE);
 	GPIO_Init(&gpioLed7);
 	GPIO_Init(&gpioUserButton);
-	uint8_t status = 0;
-	while(1) {
-		if(status) {
-			GPIO_WriteToOutputPin(GPIOB, GPIO_PIN_7, SET);
-		} else {
-			GPIO_WriteToOutputPin(GPIOB, GPIO_PIN_7, RESET);
-		}
+	GPIO_IRQPriorityConfig(IRQ_NO_EXTI15_10, 15);
+	GPIO_IRQITConfig(IRQ_NO_EXTI15_10, ENABLE);
 
-		if(GPIO_ReadFromInputPin(GPIOC, GPIO_PIN_13)) {
-			delay();
-			status = ~(status);
-		}
+//	uint8_t status = 0;
+	while(1) {
+//		if(status) {
+//			GPIO_WriteToOutputPin(GPIOB, GPIO_PIN_7, SET);
+//		} else {
+//			GPIO_WriteToOutputPin(GPIOB, GPIO_PIN_7, RESET);
+//		}
+//
+//		if(GPIO_ReadFromInputPin(GPIOC, GPIO_PIN_13)) {
+//			delay();
+//			status = ~(status);
+//		}
 	}
 	return 0;
+}
+
+void EXTI15_10_IRQHandler(void) {
+	delay();
+	GPIO_IRQHandling(GPIO_PIN_13);
+	GPIO_ToggleOutputPin(GPIOB, GPIO_PIN_7);
 }
